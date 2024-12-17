@@ -66,8 +66,8 @@ namespace Practice_Linq_2024
             //Query 2: Вивести Friendly матчі збірної Італії, які вона провела з 2020 року.  
 
             var selectedGames = games // Корегуємо запит !!!
-            .Where (game => game.Tournament == "Friendly" &&
-                    (game.Home_team == "Italy" || game.Away_team == "Italy") && 
+            .Where(game => game.Tournament == "Friendly" &&
+                    (game.Home_team == "Italy" || game.Away_team == "Italy") &&
                     game.Date.Year >= 2020)
             .OrderBy(game => game.Date)
             .ToList();
@@ -89,7 +89,7 @@ namespace Practice_Linq_2024
             //Query 3: Вивести всі домашні матчі збірної Франції за 2021 рік, де вона зіграла у нічию.
 
             var selectedGames = games   // Корегуємо запит !!!
-                .Where (game => game.Country == "France" &&
+                .Where(game => game.Country == "France" &&
                                 game.Date.Year == 2021 &&
                                 game.Home_score == game.Away_score)
                 .OrderBy(game => game.Date)
@@ -111,12 +111,20 @@ namespace Practice_Linq_2024
         {
             //Query 4: Вивести всі матчі збірної Германії з 2018 року по 2020 рік (включно), в яких вона на виїзді програла.
 
-            var selectedGames = games;   // Корегуємо запит !!!
+            var selectedGames = games   // Корегуємо запит !!!
+            .Where(game => game.Away_team == "Germany" &&
+                           game.Date.Year >= 2018 && game.Date.Year <= 2020 &&
+                           game.Away_score < game.Home_score)
+            .OrderBy(game => game.Date)
+            .ToList();
 
 
             // Перевірка
             Console.WriteLine("\n======================== QUERY 4 ========================");
-
+            foreach (var game in selectedGames)
+            {
+                Console.WriteLine($"{game.Date:dd.MM.yyyy} {game.Home_team} - {game.Away_team}, Score: {game.Home_score} - {game.Away_score}, Country: {game.Country}");
+            }
             // див. приклад як має бути виведено:
 
 
